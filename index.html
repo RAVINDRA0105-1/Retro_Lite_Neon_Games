@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RETRO - LITE | Minimalistic Games</title>
+    <style>
+        /* Base Styles & Gamer Theme */
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-magenta: #ff00ff;
+            --bg-black: #050505;
+            --card-bg: #0f0f0f;
+            --text-main: #ffffff;
+            --glitch-shadow: 2px 2px #ff00ff, -2px -2px #00f3ff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Orbitron, sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- REFINED THIN EDGE GLOW ANIMATION --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: inset 0 0 10px var(--neon-cyan);
+            animation: edge-pulse 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes edge-pulse {
+            0% { box-shadow: inset 0 0 8px var(--neon-cyan); opacity: 0.2; }
+            50% { box-shadow: inset 0 0 15px var(--neon-magenta); opacity: 0.5; }
+            100% { box-shadow: inset 0 0 10px var(--neon-cyan); opacity: 0.3; }
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 8%;
+            background: linear-gradient(to bottom, #000, transparent);
+            position: fixed; 
+            width: 84%; 
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .nav-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: var(--glitch-shadow);
+            line-height: 1;
+            font-style: italic;
+        }
+
+        .subtitle {
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        /* --- HYPER-VIVID PRISM RGB FAN --- */
+        .prism-fan-frame {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            background: #111;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #333;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 10px #000;
+        }
+
+        .fan-circle {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #050505;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #222;
+        }
+
+        .prism-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            padding: 2px;
+            background: conic-gradient(#ff0000, #ff7700, #ffdd00, #00ff00, #00ffff, #0000ff, #8a00ff, #ff00ff, #ff0000);
+            animation: rotate 2s linear infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.8));
+            z-index: 4;
+        }
+
+        .fan-blades-prism {
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            z-index: 2;
+            animation: fast-spin 0.3s linear infinite;
+            background: conic-gradient(from 0deg, transparent 0deg 40deg, rgba(0, 243, 255, 0.3) 45deg 85deg, transparent 90deg 130deg, rgba(255, 0, 255, 0.3) 135deg 175deg, transparent 180deg 220deg, rgba(57, 255, 20, 0.3) 225deg 265deg, transparent 270deg 310deg, rgba(255, 221, 0, 0.3) 315deg 355deg);
+        }
+
+        .prism-hub {
+            position: relative; width: 20px; height: 20px; background: #111; border-radius: 50%; z-index: 5; border: 1px solid #444; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+
+        .hub-led { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: led-color-cycle 4s linear infinite; }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes fast-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes led-color-cycle {
+            0% { background: #ff0000; box-shadow: 0 0 12px #ff0000; }
+            25% { background: #00ff00; box-shadow: 0 0 12px #00ff00; }
+            50% { background: #00ffff; box-shadow: 0 0 12px #00ffff; }
+            75% { background: #ff00ff; box-shadow: 0 0 12px #ff00ff; }
+            100% { background: #ff0000; box-shadow: 0 0 12px #ff0000; }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 30vh;
+            padding-top: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Game Grid */
+        .container {
+            padding: 4rem 8%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        /* --- CIRCULAR RGB TILES WITH LAZY BLUR --- */
+        .game-card {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 15px; 
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border: none;
+            padding: 3px; 
+            z-index: 1;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, var(--neon-cyan), var(--neon-magenta), transparent 30%);
+            animation: rotate 4s linear infinite;
+            z-index: -2;
+        }
+
+        .game-card::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            z-index: -1;
+        }
+
+        .game-card:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 243, 255, 0.3); }
+
+        /* Lazy Load Container */
+        .game-img-wrapper {
+            width: 100%;
+            height: 140px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 12px 12px 0 0;
+            background: #111;
+        }
+
+        /* Blurred Placeholder */
+        .img-placeholder {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            filter: blur(15px);
+            transform: scale(1.1);
+            transition: opacity 0.8s ease-in-out;
+            object-fit: cover;
+            animation: placeholder-blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes placeholder-blink {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* High Res Image */
+        .game-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, opacity 0.8s ease-in-out;
+            opacity: 0; /* Hidden until loaded */
+            position: relative;
+            z-index: 2;
+        }
+
+        .img-loaded .game-img { opacity: 1; }
+        .img-loaded .img-placeholder { opacity: 0; animation: none; }
+
+        .game-card:hover .game-img { transform: scale(1.1); }
+
+        .game-info { padding: 1rem; border-top: 1px solid #222; }
+
+        .game-tag {
+            font-size: 0.55rem;
+            background: var(--neon-magenta);
+            color: white;
+            padding: 2px 6px;
+            text-transform: uppercase;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .game-title { margin: 0; font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; }
+
+        .play-indicator {
+            margin-top: 10px;
+            font-size: 0.7rem;
+            color: var(--neon-cyan);
+            font-weight: bold;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: #555;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            line-height: 1.8;
+        }
+
+        .indie-credit { color: var(--neon-cyan); font-weight: bold; opacity: 0.7; letter-spacing: 1px; }
+
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="logo-container">
+            <div class="logo">RETRO - LITE</div>
+            <div class="subtitle">Minimalistic Games</div>
+        </div>
+        <div class="prism-fan-frame">
+            <div class="fan-circle">
+                <div class="prism-ring"></div>
+                <div class="fan-blades-prism"></div>
+                <div class="prism-hub"><div class="hub-led"></div></div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>NO ADS</h1>
+        <p style="color: var(--neon-cyan); letter-spacing: 3px; font-size: 0.9rem;">PLAY WITHOUT INTERRUPTION</p>
+    </header>
+
+    <div class="container">
+        <div class="grid">
+            
+            <a href="https://ravindra0105-1.github.io/Neon_Racer/" class="game-card lazy-container">
+                <div class="game-img-wrapper">
+                    <img src="IMG_20260413_162152.jpg" class="img-placeholder" alt="loading...">
+                    <img data-src="IMG_20260413_162152.jpg" alt="Neon Racer" class="game-img">
+                </div>
+                <div class="game-info">
+                    <span class="game-tag">Arcade Racer</span>
+                    <h3 class="game-title">NEON RACER</h3>
+                    <div class="play-indicator">>> START_GAME</div>
+                </div>
+            </a>
+
+            <a href="https://ravindra0105-1.github.io/Super_Dash_Neon/" class="game-card lazy-container">
+                <div class="game-img-wrapper">
+                     <img src="IMG_20260413_160902.jpg" class="img-placeholder" alt="loading...">
+                    <img data-src="IMG_20260413_160902.jpg" alt="Super Dash Neon" class="game-img">
+                </div>
+                <div class="game-info">
+                    <span class="game-tag">Action</span>
+                    <h3 class="game-title">SUPER DASH NEON</h3>
+                    <div class="play-indicator">>> START_GAME</div>
+                </div>
+            </a>
+
+            <a href="https://ravindra0105-1.github.io/2D_Neon_Climb_Racing/" class="game-card lazy-container">
+                <div class="game-img-wrapper">
+                     <img src="IMG_20260413_163345.jpg" class="img-placeholder" alt="loading...">
+                    <img data-src="IMG_20260413_163345.jpg" alt="2D Neon Climb Racing" class="game-img">
+                </div>
+                <div class="game-info">
+                    <span class="game-tag">Driving</span>
+                    <h3 class="game-title"> 2D NEON CLIMB RACING</h3>
+                    <div class="play-indicator">>> START_GAME</div>
+                </div>
+            </a>
+
+            <a href="https://ravindra0105-1.github.io/Aspalt_Neon_Driving/" class="game-card lazy-container">
+                <div class="game-img-wrapper">
+                     <img src="IMG_20260413_224636.jpg" class="img-placeholder" alt="loading...">
+                    <img data-src="IMG_20260413_224636.jpg" alt="Aspalt Neon Driving" class="game-img">
+                </div>
+                <div class="game-info">
+                    <span class="game-tag">City Driving</span>
+                    <h3 class="game-title"> Aspalt Neon Driving</h3>
+                    <div class="play-indicator">>> START_GAME</div>
+                </div>
+            </a>
+
+            <div class="game-card" style="cursor: default;">
+                <div class="game-img-wrapper">
+                    <span style="color: #333; font-weight: 900; font-size: 2rem; opacity: 0.5;">?</span>
+                </div>
+                <div class="game-info">
+                    <span class="game-tag" style="background: #333;">Upcoming</span>
+                    <h3 class="game-title" style="color: #444;">COMING SOON</h3>
+                    <div class="play-indicator" style="color: #222;">>> LOCKED</div>
+                </div>
+            </div>
+
+            <div class="game-card" style="cursor: default;">
+                <div class="game-img-wrapper">
+                    <span style="color: #333; font-weight: 900; font-size: 2rem; opacity: 0.5;">?</span>
+                </div>
+                <div class="game-info">
+                    <span class="game-tag" style="background: #333;">Upcoming</span>
+                    <h3 class="game-title" style="color: #444;">COMING SOON</h3>
+                    <div class="play-indicator" style="color: #222;">>> LOCKED</div>
+                </div>
+            </div>
+
+            <div class="game-card" style="cursor: default;">
+                <div class="game-img-wrapper">
+                    <span style="color: #333; font-weight: 900; font-size: 2rem; opacity: 0.5;">?</span>
+                </div>
+                <div class="game-info">
+                    <span class="game-tag" style="background: #333;">Upcoming</span>
+                    <h3 class="game-title" style="color: #444;">COMING SOON</h3>
+                    <div class="play-indicator" style="color: #222;">>> LOCKED</div>
+                </div>
+            </div>
+
+            <div class="game-card" style="cursor: default;">
+                <div class="game-img-wrapper">
+                    <span style="color: #333; font-weight: 900; font-size: 2rem; opacity: 0.5;">?</span>
+                </div>
+                <div class="game-info">
+                    <span class="game-tag" style="background: #333;">Upcoming</span>
+                    <h3 class="game-title" style="color: #444;">COMING SOON</h3>
+                    <div class="play-indicator" style="color: #222;">>> LOCKED</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 RETRO - LITE // ESTABLISHED FOR PLAYERS<br>
+        All Rights Reserved by @PlayClass.<br>
+        <span class="indie-credit">Made with Love by Small Indie Creater Mr. Ravindra Londhe.</span>
+    </footer>
+
+    <script>
+        // Scroll navigation logic
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { nav.classList.add('nav-hidden'); } 
+            else { nav.classList.remove('nav-hidden'); }
+        });
+
+        // Lazy Loading with Blur Logic
+        document.addEventListener("DOMContentLoaded", function() {
+            const lazyImages = document.querySelectorAll('.lazy-container');
+
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const container = entry.target;
+                        const img = container.querySelector('.game-img');
+                        const src = img ? img.getAttribute('data-src') : null;
+
+                        if (src) {
+                            const tempImage = new Image();
+                            tempImage.src = src;
+                            tempImage.onload = () => {
+                                img.src = src;
+                                container.classList.add('img-loaded');
+                            };
+                        }
+                        observer.unobserve(container);
+                    }
+                });
+            });
+
+            lazyImages.forEach(imgContainer => imageObserver.observe(imgContainer));
+        });
+    </script>
+
+</body>
+</html>
